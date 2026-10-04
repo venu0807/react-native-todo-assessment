@@ -292,9 +292,15 @@ describe('Navigation & RootNavigator', () => {
     });
 
     it('renders TaskDetailScreen stub correctly', () => {
-      const tree = renderer.create(
-        <TaskDetailScreen route={{} as any} navigation={{} as any} />,
-      );
+      const store = createTestStore();
+      let tree: any;
+      act(() => {
+        tree = renderer.create(
+          <Provider store={store}>
+            <TaskDetailScreen route={{} as any} navigation={{} as any} />
+          </Provider>,
+        );
+      });
       expect(
         tree.root.findByProps({testID: 'task-detail-screen'}),
       ).toBeDefined();
