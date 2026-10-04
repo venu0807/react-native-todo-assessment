@@ -282,8 +282,11 @@ describe('Navigation & RootNavigator', () => {
     });
 
     it('renders TaskFormScreen stub correctly', () => {
+      const store = createTestStore();
       const tree = renderer.create(
-        <TaskFormScreen route={{} as any} navigation={{} as any} />,
+        <Provider store={store}>
+          <TaskFormScreen route={{} as any} navigation={{} as any} />
+        </Provider>,
       );
       expect(tree.root.findByProps({testID: 'task-form-screen'})).toBeDefined();
     });

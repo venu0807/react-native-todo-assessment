@@ -55,3 +55,19 @@ jest.mock('react-native-gesture-handler', () => {
 jest.mock('react-native-safe-area-context', () => {
   return require('react-native-safe-area-context/jest/mock').default;
 });
+
+jest.mock('@react-native-community/datetimepicker', () => {
+  const React = require('react');
+  const {View} = require('react-native');
+  const MockDateTimePicker = React.forwardRef((props, ref) => {
+    return React.createElement(View, {...props, ref});
+  });
+  return {
+    __esModule: true,
+    default: MockDateTimePicker,
+    DateTimePickerAndroid: {
+      open: jest.fn(),
+      dismiss: jest.fn(),
+    },
+  };
+});
