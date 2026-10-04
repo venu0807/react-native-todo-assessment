@@ -8,6 +8,7 @@ if (I18nManager && !I18nManager.getConstants) {
 }
 
 require('react-native/Libraries/Animated/Animated');
+require('react-native-reanimated').setUpTests();
 
 jest.mock('@react-native-async-storage/async-storage', () => ({
   setItem: jest.fn(() => Promise.resolve()),
