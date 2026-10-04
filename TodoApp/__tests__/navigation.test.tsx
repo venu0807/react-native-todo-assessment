@@ -198,12 +198,15 @@ describe('Navigation & RootNavigator', () => {
   describe('Navigator Components & Stacks', () => {
     it('renders AuthNavigator inside NavigationContainer with LoginScreen initial route', async () => {
       let testRenderer: renderer.ReactTestRenderer;
+      const store = createTestStore();
 
       await act(async () => {
         testRenderer = renderer.create(
-          <NavigationContainer>
-            <AuthNavigator />
-          </NavigationContainer>,
+          <Provider store={store}>
+            <NavigationContainer>
+              <AuthNavigator />
+            </NavigationContainer>
+          </Provider>,
         );
         jest.runOnlyPendingTimers();
       });
@@ -233,15 +236,21 @@ describe('Navigation & RootNavigator', () => {
 
   describe('Screen Stubs', () => {
     it('renders LoginScreen stub correctly', () => {
+      const store = createTestStore();
       const tree = renderer.create(
-        <LoginScreen route={{} as any} navigation={{} as any} />,
+        <Provider store={store}>
+          <LoginScreen route={{} as any} navigation={{} as any} />
+        </Provider>,
       );
       expect(tree.root.findByProps({testID: 'login-screen'})).toBeDefined();
     });
 
     it('renders RegisterScreen stub correctly', () => {
+      const store = createTestStore();
       const tree = renderer.create(
-        <RegisterScreen route={{} as any} navigation={{} as any} />,
+        <Provider store={store}>
+          <RegisterScreen route={{} as any} navigation={{} as any} />
+        </Provider>,
       );
       expect(tree.root.findByProps({testID: 'register-screen'})).toBeDefined();
     });
