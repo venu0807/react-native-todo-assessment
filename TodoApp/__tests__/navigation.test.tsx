@@ -18,9 +18,9 @@ import HomeScreen from '../src/screens/HomeScreen';
 import TaskFormScreen from '../src/screens/TaskFormScreen';
 import TaskDetailScreen from '../src/screens/TaskDetailScreen';
 
-const createTestStore = (
-  initialAuthState = {token: null, user: null, isAuthenticated: false},
-) => {
+import type {AuthState} from '../src/types';
+
+const createTestStore = (initialAuthState: Partial<AuthState> = {}) => {
   return configureStore({
     reducer: {
       auth: authReducer,
@@ -28,7 +28,12 @@ const createTestStore = (
       [tasksApi.reducerPath]: tasksApi.reducer,
     },
     preloadedState: {
-      auth: initialAuthState,
+      auth: {
+        token: null,
+        user: null,
+        isAuthenticated: false,
+        ...initialAuthState,
+      },
     },
     middleware: getDefaultMiddleware =>
       getDefaultMiddleware().concat(authApi.middleware, tasksApi.middleware),
@@ -218,12 +223,19 @@ describe('Navigation & RootNavigator', () => {
 
     it('renders AppNavigator inside NavigationContainer with HomeScreen initial route', async () => {
       let testRenderer: renderer.ReactTestRenderer;
+      const store = createTestStore({
+        token: 'token-123',
+        user: {_id: 'u-1', email: 'test@domain.com'},
+        isAuthenticated: true,
+      });
 
       await act(async () => {
         testRenderer = renderer.create(
-          <NavigationContainer>
-            <AppNavigator />
-          </NavigationContainer>,
+          <Provider store={store}>
+            <NavigationContainer>
+              <AppNavigator />
+            </NavigationContainer>
+          </Provider>,
         );
         jest.runOnlyPendingTimers();
       });
@@ -256,8 +268,15 @@ describe('Navigation & RootNavigator', () => {
     });
 
     it('renders HomeScreen stub correctly', () => {
+      const store = createTestStore({
+        token: 'token-123',
+        user: {_id: 'u-1', email: 'test@domain.com'},
+        isAuthenticated: true,
+      });
       const tree = renderer.create(
-        <HomeScreen route={{} as any} navigation={{} as any} />,
+        <Provider store={store}>
+          <HomeScreen route={{} as any} navigation={{} as any} />
+        </Provider>,
       );
       expect(tree.root.findByProps({testID: 'home-screen'})).toBeDefined();
     });

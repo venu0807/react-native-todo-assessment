@@ -24,7 +24,7 @@ export const AppNavigator: React.FC = () => {
       <Stack.Screen
         name="Home"
         component={HomeScreen}
-        options={{title: 'My Tasks'}}
+        options={{title: 'My Tasks', headerShown: false}}
       />
       <Stack.Screen
         name="TaskForm"
