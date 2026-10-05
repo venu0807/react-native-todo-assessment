@@ -132,5 +132,5 @@ A release/debug APK has been compiled and is ready for direct installation:
 ## 👨‍💻 Author
 **VENU GOPAL REDDY PALUGULLA**  
 - Email: pvgreddy3@gmail.com  
-- LinkedIn: [linkedin.com/in/venugopalreddy0807](https://www.linkedin.com/in/venugopalreddy0807/)  
+- LinkedIn: [linkedin.com/in/venu0807](https://www.linkedin.com/in/venu0807/)  
 - Portfolio: [venureddy.vercel.app](https://venureddy.vercel.app/)  
